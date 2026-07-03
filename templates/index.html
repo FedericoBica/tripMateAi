@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TripMate AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="board-hall">
+        <div class="board-texture" aria-hidden="true"></div>
+
+        <header class="board-header">
+            <div class="board-status">
+                <span class="led" aria-hidden="true"></span>
+                <span>System status: online</span>
+            </div>
+
+            <h1 class="flip-title" id="flipTitle" data-text="TripMate AI">
+                <noscript>TripMate AI</noscript>
+            </h1>
+
+            <p class="board-subtitle">
+                Un sistema multi-agente creado con LangGraph que busca vuelos, hoteles,
+                y planea tu itinerario completo
+            </p>
+        </header>
+    </div>
+
+    <main class="app-container">
+
+        <section class="ticket planner-ticket">
+            <div class="ticket-notch ticket-notch--left" aria-hidden="true"></div>
+            <div class="ticket-notch ticket-notch--right" aria-hidden="true"></div>
+
+            <span class="ticket-eyebrow">Boarding pass · Trip request</span>
+
+            <div class="ticket-copy">
+                <h2>A donde quieres ir?</h2>
+                <p>Ejemplo: Planeá un viaje completo de 10 días por España saliendo desde Montevideo,
+                     con un presupuesto máximo de 3000 USD, incluyendo vuelos, hoteles, actividades turísticas e itinerario diario.</p>
+            </div>
+
+            <div class="ticket-main">
+                <textarea
+                    id="userInput"
+                ></textarea>
+
+                <button id="sendBtn" onclick="sendMessage()">
+                    <span id="btnText">Generar plan</span>
+                    <span id="btnLoader" class="flap-loader hidden" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </span>
+                </button>
+            </div>
+
+            <hr class="ticket-divider" aria-hidden="true">
+
+            <div class="ticket-stub">
+                <span class="stub-label">Rutas rapidas</span>
+
+                <div class="quick-prompts">
+                    <button onclick="setPrompt('Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs.')">
+                        Japon · 7d
+                    </button>
+
+                    <button onclick="setPrompt('Plan a 5 days Dubai trip from Dhaka with flights, hotels and sightseeing.')">
+                        Dubai · 5d
+                    </button>
+
+                    <button onclick="setPrompt('Plan a 7 days Thailand trip from Bangladesh with budget hotels and sightseeing.')">
+                        Tailandia · 10d
+                    </button>
+
+                    <button onclick="setPrompt('Give me all country flight info.')">
+                        Global flights
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultSection" class="ticket result-ticket hidden">
+            <div class="ticket-notch ticket-notch--left" aria-hidden="true"></div>
+            <div class="ticket-notch ticket-notch--right" aria-hidden="true"></div>
+
+            <div class="result-topmatter">
+                <div>
+                    <span class="ticket-eyebrow">Boarding pass · Your itinerary</span>
+                    <h2>Your AI travel plan</h2>
+                </div>
+
+                <div class="result-actions">
+                    <button class="copy-btn" onclick="copyResult()">Copy</button>
+                    <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+                </div>
+            </div>
+
+            <p id="threadInfo" class="thread-info">Thread — -</p>
+
+            <hr class="ticket-divider" aria-hidden="true">
+
+            <div id="pdfContent" class="pdf-content">
+                <div class="pdf-letterhead">
+                    <span>TripMate AI</span>
+                    <span>Boarding pass · Itinerary</span>
+                </div>
+                <div id="resultBox" class="result-box"></div>
+                <div class="pdf-barcode" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section id="errorBox" class="alert-strip hidden"></section>
+
+    </main>
+
+    <footer>
+        Built with FastAPI · LangGraph · Groq · PostgreSQL · Tavily · AviationStack
+    </footer>
+
+    <!-- Markdown Renderer -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- PDF Download Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Your Custom JS -->
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
