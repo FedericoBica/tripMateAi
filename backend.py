@@ -108,14 +108,28 @@ Create a complete travel itinerary.
 
 User Query:
 {state['user_query']}
-
+{flights_note}
 Flight Results:
 {state['flight_results']}
 
 Hotel Results:
 {state['hotel_results']}
 
+Reglas estrictas:
+- No inventes precios, nombres de hoteles o vuelos, ni ningún dato numérico
+  que no aparezca en Flight Results o Hotel Results de arriba. Si esa
+  información no está disponible para algún tramo, decilo explícitamente
+  en esa sección ("no se encontraron opciones para X") en vez de
+  completarla con un número o nombre plausible.
+- Si el destino es un país o región y el viaje dura varios días, dividilo
+  en ciudades/paradas concretas (podés apoyarte en cómo vienen organizados
+  los Hotel Results). Para cada parada, dá actividades por franja horaria
+  (mañana/tarde/noche) en vez de solo nombrar la ciudad. Está bien sugerir
+  tipos de comida o zonas para comer sin inventar el nombre de un
+  restaurante puntual.
+ 
 Make the itinerary practical, budget-aware, and easy to follow.
+
 """
 
     response = llm.invoke([
